@@ -35,8 +35,6 @@ class BST:
         root = self.root
 
         def recurse(root, string):
-            """ a recursive helper function for the serialize() function."""
-            # check base case
             if root is None:
                 string += 'None,'
             else:
@@ -81,9 +79,6 @@ class BST:
         pass
 
     def search(self, target):
-        """
-        returns the pointer to node in the BST. Returns None if not found.
-        """
         root = self.root
 
         while root and target != root.key:
