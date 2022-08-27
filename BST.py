@@ -7,11 +7,13 @@ value.
     - key is the value of the TreeNode.
 
 ASSUMES THE VALUES IN THE BST ARE UNIQUE.
+
 Consists of the following methods:
-    - insert(x): inserts the key x into the tree.
-    - serialize(): performs a serialized preorder traversal on the tree.
+    - insert(x): inserts the key x into the tree
+    - serialize(): performs a serialized preorder traversal on the tree. The default for displaying a tree.
     - delete(x): deletes the node x from the tree and adjusts the tree accordingly.
     - search(x): searches the tree for node x, returns -1 if not found.
+    - successor(x): returns the inorder successor to the node x.
     - inorder(): performs  and returns tje inorder traversal of the BST.
 """
 
@@ -89,6 +91,27 @@ class BST:
                 root = root.right
 
         return BST(root)
+
+    def successor(self, node):
+        node = self.search(node)
+        root = node.root
+
+        if root.right:
+            r = root.right
+
+            while r.left:
+                r = r.left
+
+            return BST(r)
+
+        else:
+            p = root.parent
+
+            while p and root == p.right:
+                root = p
+                p = root.parent
+
+            return BST(p)
 
     def inorder(self):
         root = self.root
