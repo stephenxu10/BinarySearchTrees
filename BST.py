@@ -11,6 +11,7 @@ ASSUMES THE VALUES IN THE BST ARE UNIQUE.
 Consists of the following methods:
     - insert(x): inserts the key x into the tree
     - serialize(): performs a serialized preorder traversal on the tree. The default for displaying a tree.
+    - transplant(u, v): replaces the BST rooted at u with the BST rooted at v. Helper method for delete.
     - delete(x): deletes the node x from the tree and adjusts the tree accordingly.
     - search(x): searches the tree for node x, returns -1 if not found.
     - successor(x): returns the inorder successor to the node x.
@@ -77,7 +78,44 @@ class BST:
             else:
                 prev.right = data
 
+    def transplant(self, u, v):
+        u = u.root
+        v = v.root
+        if u is None:
+            self.root = v
+
+        else:
+            if u.parent.left == u:
+                u.parent.left = v
+            else:
+                u.parent.right = v
+
+            if v:
+                v.parent = u.parent
+
     def delete(self, node):
+        """
+        5 subcases for this:
+            1) node is a leaf node.
+                - simply delete node by setting node.parent appropriate child to none.
+            2) node has only a left child.
+                - transplant node with node.left
+            3) node has only a right child
+                - transplant node with node.right
+            4) node has both left and right children
+                - let y be in the inorder successor of node.
+                4a) if y == node.right:
+                    - transplant node with y
+                    - set y.left to equal to node.left
+                    - set node.left.parent to equal to y.
+
+                4b) else:
+                    - transplant y with its right child.
+                    - set y.right to point to node.right, set r.parent to be y
+                    - transplant y with node.
+                    - set y.left to be node.left
+                    - set y.left's parent to be y.
+        """
         pass
 
     def search(self, target):
