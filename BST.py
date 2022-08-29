@@ -15,8 +15,9 @@ Consists of the following methods:
     - delete(x): deletes the node x from the tree and adjusts the tree accordingly.
     - search(x): searches the tree for node x, returns -1 if not found.
     - successor(x): returns the inorder successor to the node x.
-    - inorder(): performs  and returns tje inorder traversal of the BST.
+    - inorder(): performs  and returns the inorder traversal of the BST.
 """
+import copy
 
 
 class Node:
@@ -79,9 +80,7 @@ class BST:
                 prev.right = data
 
     def transplant(self, u, v):
-        u = u.root
-        v = v.root
-        if u is None:
+        if u.parent is None:
             self.root = v
 
         else:
@@ -112,11 +111,44 @@ class BST:
                 4b) else:
                     - transplant y with its right child.
                     - set y.right to point to node.right, set r.parent to be y
-                    - transplant y with node.
+                    - transplant node with y.
                     - set y.left to be node.left
                     - set y.left's parent to be y.
         """
-        pass
+        copy_node = copy.deepcopy(node)
+        node = self.search(node).root
+
+        # Case 1
+        if node.left is None and node.right is None:
+            self.transplant(node, None)
+
+        # Case 2
+        elif node.left and node.right is None:
+            self.transplant(node, node.left)
+
+        # Case 3
+        elif node.right and node.left is None:
+            self.transplant(node, node.right)
+
+        # Case 4
+        else:
+            y = self.successor(copy_node).root
+
+            # Case 4a
+            if y == node.right:
+                self.transplant(node, y)
+                y.left = node.left
+                node.left.parent = y
+
+            # Case 4b
+            else:
+                self.transplant(y, y.right)
+                y.right = node.right
+                y.right.parent = y
+
+                self.transplant(node, y)
+                y.left = node.left
+                y.left.parent = y
 
     def search(self, target):
         root = self.root
