@@ -13,7 +13,7 @@ Consists of the following methods:
     - serialize(): performs a serialized preorder traversal on the tree. The default for displaying a tree.
     - transplant(u, v): replaces the BST rooted at u with the BST rooted at v. Helper method for delete.
     - delete(x): deletes the node x from the tree and adjusts the tree accordingly.
-    - search(x): searches the tree for node x, returns -1 if not found.
+    - search(x): searches the tree for node x, returns None if not found.
     - successor(x): returns the inorder successor to the node x.
     - inorder(): performs  and returns the inorder traversal of the BST.
 """
@@ -36,6 +36,9 @@ class BST:
         return self.serialize()
 
     def serialize(self):
+        """
+        Performs a preorder (root -> left -> right) traversal on the tree and outputs the serialized result.
+        """
         root = self.root
 
         def recurse(root, string):
@@ -55,6 +58,14 @@ class BST:
         return serial
 
     def insert(self, data):
+        """
+        params:
+            - data: an integer to be inserted.
+
+        output:
+            - returns nothing but inserts data into the tree. We do so by traversing through the tree until we
+            find the first valid location for data.
+        """
         if self.root is None:
             self.root = Node(data)
 
