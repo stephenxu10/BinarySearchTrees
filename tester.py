@@ -1,4 +1,5 @@
 from BST import BST
+from rotations import left_rotate, right_rotate
 
 tree = BST()
 tree.insert(15)
@@ -14,6 +15,7 @@ tree.insert(13)
 tree.insert(9)
 print(tree)
 print(tree.inorder())
-tree.delete(15)
+
+right_rotate(tree, tree.root)
 print(tree)
 print(tree.inorder())
